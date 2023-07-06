@@ -200,3 +200,10 @@ class TestAccountService(TestCase):
         resp = self.client.put(BASE_URL)
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
         
+    def test_list_all_accounts(self):
+        """It should list all accounts"""
+        self._create_accounts(3)
+        resp = self.client.get(BASE_URL)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        data = resp.get_json()
+        self.assertEqual(len(data), 3)
